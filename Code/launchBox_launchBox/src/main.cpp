@@ -6,7 +6,7 @@ const int pc_BUZZER_PIN             = 7;  // Digital pin D7
 const int pc_TRIGGER_PIN            = 3;  // Digital D3
 const int pc_MSG_RECV_PIN           = 4;  // Digital D4, LED
 const int pc_BTN_LED_PIN            = 5; // Digital D5
-const int pc_RAIL_ARMED_PIN         = 2; // 
+const int pc_RAIL_ARMED_PIN         =       2; // 
 
 const String pc_TOPIC           = "TOPIC";
 const String pc_REQ_TRI         = "REQ_TRI";
@@ -167,89 +167,90 @@ void loop() {
     doc.clear();
     Serial.println(reqContinuitiesSerialize); // Sending REQ_CON
 
-    // Waits til it gets a respond from REQ_CON
-    while (msg.length() <= 0)
+    if (Serial.available() > 0)
     {
       msg = Serial.readStringUntil('\n');
-    }
-
-    msg.trim(); // Takes out any spaces
-
-    // turning into a json document
-    const char* msgCStr = msg.c_str();
-    if (pc_debug)
-    {
-      // Serial.println(msg);
-    }
-    doc.clear();
-    DeserializationError err1 = deserializeJson(doc, msgCStr);
-    String err1Str = err1.f_str();
-    if (err1 && pc_debug)
-    {
-      Serial.println("{\"TOPIC\":\"ERROR\",\"msg\":\"1. Error occured desearializing incoming msg:'"+err1Str+"'\",\"msgRecv\":\""+msg+"\"}");
-    }
-    else
-    {
-      String topic = doc["TOPIC"];
-
-      if (topic == pc_RES_CON)
+      msg.trim(); // Takes out any spaces
+      
+      // turning into a json document
+      const char* msgCStr = msg.c_str();
+      if (pc_debug)
       {
-        msgRecv();
-        isRailArmed = doc[pc_IS_ARMED];
-        hasContinuity = doc[pc_HAS_CONTINUITY];
-
-        if (hasContinuity)
-        {
-          turnOnRailArmed();
-        }
-        else
-        {
-          turnOffRailArmed();
-        }
-
-        if (pc_debug)
-        {
-          Serial.println("IsArmed: " + String(isRailArmed));
-          Serial.println("isHandHeldArmed: " + String(isHandHeldArmed));
-          Serial.println("asContinuity: " + String(hasContinuity));
-          Serial.println("isTriggerPress: " + String(isTriggerPress));
-        }
-        
-        doc.clear();
+        // Serial.println(msg);
       }
-      else if (topic == pc_RES_TRI)
+      doc.clear();
+      DeserializationError err1 = deserializeJson(doc, msgCStr);
+      String err1Str = err1.f_str();
+      if (err1 && pc_debug)
       {
-        msgRecv();
-        String isSuccess = doc[pc_SUCCESS];
-        doc.clear();
-      }
-      else if (topic == pc_ERROR)
-      {
-        msgRecv();
-        /// TODO: handle errors
-        doc.clear();
-      }
-
-      if (hasContinuity && isHandHeldArmed)
-      {
-        turnOnBuzzer();
-        turnOnBTNLED();
+        Serial.println("{\"TOPIC\":\"ERROR\",\"msg\":\"1. Error occured desearializing incoming msg:'"+err1Str+"'\",\"msgRecv\":\""+msg+"\"}");
       }
       else
       {
-        turnOffBuzzer();
-        turnOffBTNLED();
-      }
+        String topic = doc["TOPIC"];
 
-      if (isTriggerPress && hasContinuity && isHandHeldArmed && isRailArmed)
-      {
-        Serial.println(reqTriggerSerialize);
-      }
+        if (topic == pc_RES_CON)
+        {
+          msgRecv();
+          isRailArmed = doc[pc_IS_ARMED];
+          hasContinuity = doc[pc_HAS_CONTINUITY];
 
+          if (hasContinuity)
+          {
+            turnOnRailArmed();
+          }
+          else
+          {
+            turnOffRailArmed();
+          }
+
+          if (pc_debug)
+          {
+            Serial.println("IsArmed: " + String(isRailArmed));
+            Serial.println("isHandHeldArmed: " + String(isHandHeldArmed));
+            Serial.println("asContinuity: " + String(hasContinuity));
+            Serial.println("isTriggerPress: " + String(isTriggerPress));
+          }
+          
+          doc.clear();
+        }
+        else if (topic == pc_RES_TRI)
+        {
+          msgRecv();
+          String isSuccess = doc[pc_SUCCESS];
+          doc.clear();
+        }
+        else if (topic == pc_ERROR)
+        {
+          msgRecv();
+          /// TODO: handle errors
+          doc.clear();
+        }
+
+        if (hasContinuity && isHandHeldArmed)
+        {
+          turnOnBuzzer();
+          turnOnBTNLED();
+        }
+        else
+        {
+          turnOffBuzzer();
+          turnOffBTNLED();
+        }
+
+        if (isTriggerPress && hasContinuity && isHandHeldArmed && isRailArmed)
+        {
+          Serial.println(reqTriggerSerialize);
+        }
+
+      }
     }
-
+    else
+    {
+      delay(100);
+    }
     msg = "";
-
+    
   }
 
 
