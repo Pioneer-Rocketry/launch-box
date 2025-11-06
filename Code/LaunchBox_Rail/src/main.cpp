@@ -6,11 +6,15 @@ const int IGN_CONTINUITY_PIN    = A7;   // Continuity across the igniter
 
 const int TRIGGER_PIN           = 2;    // Trigger pin (D2) for lighting the igniter
 const int BUZZER_PIN            = 7;    // Buzzer pin (D7)
+const int MANUAL_TRIG_GND      = 10;   // Override switch
+const int MANUAL_TRIG_POS      = 11;
+const int MANUAL_OVERRIDE_TOGGLE = 12;
 
 const int TRIGGER_LENGTH        = 1000; // 1000 ms = 1 s
 
 const float IS_ARMED_SET_POINT  = 3.4;  // Voltage at which the system is armed
 const float HAS_CONTINUITY_POINT = 3.4; // Voltage at which the igniter has continuity
+const float MANUAL_TRIG_POINT = 3.4;
 
 const String pc_TOPIC           = "TOPIC";
 const String pc_REQ_TRI         = "REQ_TRI";
@@ -83,10 +87,32 @@ bool hasContinuityFunc()
   return hasContinuity;
 }
 
+bool shouldManualTrigger()
+{
+
+  bool manualTrig = false;
+
+  bool GND = digitalRead(MANUAL_TRIG_GND);
+  bool POS = digitalRead(MANUAL_TRIG_POS);
+
+  if (!GND && POS)
+  {
+    manualTrig = true;
+    return manualTrig;
+  }
+
+  return manualTrig;
+
+}
+
 void setup() {
   // put your setup code here, to run once:
   pinMode(ARMED_PIN, INPUT);
   pinMode(IGN_CONTINUITY_PIN, INPUT);
+
+  pinMode(MANUAL_TRIG_GND, INPUT_PULLUP);
+  pinMode(MANUAL_TRIG_POS, INPUT);
+  digitalWrite(MANUAL_TRIG_POS, LOW);
   
   pinMode(TRIGGER_PIN, OUTPUT);
   pinMode(BUZZER_PIN, OUTPUT);
@@ -99,6 +125,7 @@ void loop() {
   
   bool isArmed = false;
   bool hasContinuity = false;
+  bool manualTrigger = false;
   String msg = "";
   JsonDocument doc;
 
@@ -106,6 +133,7 @@ void loop() {
   {
     isArmed = isArmedFunc();
     hasContinuity = hasContinuityFunc();
+    manualTrigger = shouldManualTrigger();
 
     if (hasContinuity)
     {
@@ -187,6 +215,16 @@ void loop() {
         }
       }
 
+    }
+    else if (digitalRead(MANUAL_OVERRIDE_TOGGLE))
+    {
+      if (manualTrigger) // comes from launch control unit
+      {
+        if (isArmed && hasContinuity) // comes from launch pad box
+        {
+          trigger();
+        }
+      }
     }
   }
   
