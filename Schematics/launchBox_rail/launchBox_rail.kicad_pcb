@@ -120,6 +120,7 @@
 		(property "Reference" "J3"
 			(at 0 -2.38 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "f210ca7e-b3c5-404c-b60f-1ab5877345e2")
 			(effects
 				(font
@@ -367,7 +368,7 @@
 	(footprint "logo:Logo"
 		(layer "F.Cu")
 		(uuid "29c7391a-cb15-4106-921d-b6600821ad81")
-		(at 91.44 81.915)
+		(at 91.694 82.804)
 		(property "Reference" "G***"
 			(at 0 0 0)
 			(layer "F.SilkS")
@@ -651,6 +652,7 @@
 		(property "Reference" "J2"
 			(at 0 -2.38 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "ce125522-d479-40f6-818b-eb00864e58ed")
 			(effects
 				(font
@@ -926,6 +928,7 @@
 		(property "Reference" "H3"
 			(at 0 -4.15 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "6df22e49-b94e-44c5-997c-07c4333f680c")
 			(effects
 				(font
@@ -1050,6 +1053,7 @@
 		(property "Reference" "H1"
 			(at 0 -4.15 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "3e4de538-5c17-43fd-9a03-e8084c6a0259")
 			(effects
 				(font
@@ -1174,6 +1178,7 @@
 		(property "Reference" "H2"
 			(at 0 -4.15 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "369180ef-4d1f-45ab-860c-cd95b99c2b7f")
 			(effects
 				(font
@@ -1298,6 +1303,7 @@
 		(property "Reference" "A1"
 			(at 7.62 0 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "8345080c-fb17-46f0-82ca-02e157bea986")
 			(effects
 				(font
@@ -2286,6 +2292,7 @@
 		(property "Reference" "J1"
 			(at 0 -2.38 0)
 			(layer "F.SilkS")
+			(hide yes)
 			(uuid "02bbe209-d27d-476b-84a0-56a4b78f7db2")
 			(effects
 				(font
@@ -4560,7 +4567,7 @@
 			(justify left bottom)
 		)
 	)
-	(gr_text "SW1 Out"
+	(gr_text "Out"
 		(at 120.396 66.36 0)
 		(layer "F.SilkS")
 		(uuid "2c83e1c1-280f-46d6-bb86-909b7ebf60a2")
@@ -4608,7 +4615,7 @@
 			(justify left bottom)
 		)
 	)
-	(gr_text "SW1 In"
+	(gr_text "In"
 		(at 120.396 63.36 0)
 		(layer "F.SilkS")
 		(uuid "7d4c2995-9046-4181-bccc-909e18da7836")
@@ -5796,14 +5803,13 @@
 		)
 	)
 	(group ""
-		(uuid "34810b46-8072-4cc2-84e4-bed3fd0f9fbf")
-		(members "0e9a45ad-2ccd-4c20-82d6-20de529e2370" "17d5c1b7-8eab-48d1-8feb-89a5fd7ca4e3"
-			"46843de9-f1ae-4b66-881b-c162d3ac92af" "948eea1b-df2a-4b29-b598-63c67604af17"
-			"f54e5c48-b5fc-4634-9ab8-971e7da5928b"
+		(uuid "36b5ad2f-7951-4937-94cd-8ea5dfd4c76b")
+		(members "0a5d2dc9-061d-43d7-a648-1f5bb1d03fff" "7a3ea3e2-8d97-4630-b69b-6c049bb16100"
+			"b97a5974-38fb-4299-a725-e20eba3cf6de"
 		)
 	)
 	(group ""
-		(uuid "3f60d921-b614-4773-b8e4-ce345b339252")
+		(uuid "618c0587-7aa3-46df-9b76-e8ba9b427e3f")
 		(members "2c83e1c1-280f-46d6-bb86-909b7ebf60a2" "7d4c2995-9046-4181-bccc-909e18da7836"
 			"9eb5c989-d33d-471d-8bf5-0024f930dd4b"
 		)
@@ -5815,16 +5821,16 @@
 		)
 	)
 	(group ""
-		(uuid "aac41b08-b45d-428d-959c-8f5fd0828199")
-		(members "0a5d2dc9-061d-43d7-a648-1f5bb1d03fff" "7a3ea3e2-8d97-4630-b69b-6c049bb16100"
-			"b97a5974-38fb-4299-a725-e20eba3cf6de"
+		(uuid "ae2976ea-da5b-4ac1-8aa0-856384c7fdc0")
+		(members "0e9a45ad-2ccd-4c20-82d6-20de529e2370" "17d5c1b7-8eab-48d1-8feb-89a5fd7ca4e3"
+			"46843de9-f1ae-4b66-881b-c162d3ac92af" "948eea1b-df2a-4b29-b598-63c67604af17"
+			"f54e5c48-b5fc-4634-9ab8-971e7da5928b"
 		)
 	)
 	(group ""
-		(uuid "c83b7b93-2204-4e4d-ae20-dabe826b3fba")
+		(uuid "bdabe919-1a79-4be0-b0ba-c53bca6f0e84")
 		(members "0be55ec3-0673-4b91-bc9b-4347a262f02b" "638f19fc-76b9-4aa4-b3d8-243c415282aa"
-			"a7122983-a21e-491b-91d0-4d3b9f6ac649" "d8d969a3-31ee-4c61-a8ea-76a7f2eb4491"
-			"e6e49a03-15cf-40ca-8a4e-a4b36c0d7501"
+			"a7122983-a21e-491b-91d0-4d3b9f6ac649"
 		)
 	)
 	(embedded_fonts no)
